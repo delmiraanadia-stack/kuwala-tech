@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-ibm-plex-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-ibm-plex-mono: "IBM Plex Mono", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --color-primary: #0A1128;
+  --color-primary-dark: #060A17;
+  --color-primary-card: #111C44;
+  --color-primary-hover: #18275C;
+  --color-system: #00D2FF;
+  --color-system-glow: rgba(0, 210, 255, 0.12);
+  --color-energy: #F59E0B;
+  --color-energy-bright: #FFB703;
+  --color-background: #060A17;
+  --color-surface: #0F172A;
+  --color-surface-light: #1E293B;
+  --color-surface-card: #131E38;
+  --color-text: #F8FAFC;
+  --color-muted: #94A3B8;
+  --color-border: #1E2C4F;
+  --color-border-subtle: rgba(0, 210, 255, 0.15);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-ibm-plex-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-ibm-plex-sans), sans-serif;
+    letter-spacing: -0.015em;
+  }
+
+  code, pre, .font-mono, .tech-label, .tech-badge {
+    font-family: var(--font-ibm-plex-mono), monospace;
+  }
+
+  /* Focus visible accessibility outline */
+  :focus-visible {
+    outline: 2px solid var(--color-energy-bright);
+    outline-offset: 2px;
+  }
+}
+
+/* Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip link styling */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 9999;
+  background-color: var(--color-energy);
+  color: #060A17;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  border-radius: 4px;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 16px;
+}
+
+/* Technical Circuit & Grid Overlays */
+.tech-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 210, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 210, 255, 0.04) 1px, transparent 1px);
+}
+
+.tech-grid-dense {
+  background-size: 16px 16px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 210, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 210, 255, 0.06) 1px, transparent 1px);
+}
+
+.circuit-glow {
+  box-shadow: 0 0 25px -5px rgba(0, 210, 255, 0.15);
+}
+
+.energy-glow {
+  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.2);
+}
+
+/* Engineering technical card corner markers */
+.tech-card {
+  position: relative;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  transition: all 0.25s ease-in-out;
+}
+
+.tech-card::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--color-system);
+  border-left: 2px solid var(--color-system);
+}
+
+.tech-card::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid var(--color-energy);
+  border-right: 2px solid var(--color-energy);
+}
+
+.tech-card:hover {
+  border-color: rgba(0, 210, 255, 0.4);
+  transform: translateY(-2px);
+}
