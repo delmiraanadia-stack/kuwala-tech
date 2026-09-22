@@ -12,7 +12,7 @@ O projeto foi concebido para transmitir autoridade técnica, confiabilidade de e
 - **Tipografia Técnica**: IBM Plex Sans (textos e títulos institucionais) e IBM Plex Mono (números, metadados, labels e códigos técnicos).
 - **Design System Centralizado**: Paleta semântica com Primary Navy (`#0A1128`), System Cyan (`#00D2FF`) e Energy Gold (`#F59E0B`), com tokens CSS centralizados em `src/app/globals.css` e `tailwind.config.ts`.
 - **Internacionalização (i18n)**: Suporte bilíngue nativo e reativo (Português / Inglês) persistido no navegador.
-- **Base de Dados & Backend**: SQLite nativo com modelo `service_requests` e endpoint `/api/atendimento` com validação de esquema Zod, rate limiting e encaminhamento seguro para WhatsApp.
+- **Base de Dados & Backend**: Neon Serverless PostgreSQL em produção com modelo `service_requests` e endpoint `/api/atendimento` com validação de esquema Zod, rate limiting e encaminhamento seguro para WhatsApp.
 - **Acessibilidade (WCAG 2.1 AA)**: Skip link, suporte a `@media (prefers-reduced-motion: reduce)`, navegação por teclado, anéis de foco visíveis e landmarks semânticos.
 
 ---
@@ -130,7 +130,7 @@ npm run start
 │   ├── components/          # Componentes reutilizáveis e acessíveis
 │   ├── content/             # Dados tipados centrais (brand, services, solutions, method, founders)
 │   ├── context/             # Contexto de Internacionalização (PT/EN)
-│   ├── db/                  # Persistência nativa SQLite (service_requests)
+│   ├── db/                  # Persistência Neon Serverless PostgreSQL (service_requests)
 │   ├── i18n/                # Dicionários completos PT e EN
 │   ├── schemas/             # Validação Zod cliente e servidor
 │   ├── tests/               # Testes unitários e de integração

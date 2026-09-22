@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { atendimentoSchema } from "@/schemas/atendimento";
-import { createServiceRequest } from "@/db/sqlite";
+import { createServiceRequest } from "@/db/postgres";
 
 // Simple in-memory IP rate limiter: max 10 requests per 5 minutes per IP
 const requestLog = new Map<string, number[]>();
