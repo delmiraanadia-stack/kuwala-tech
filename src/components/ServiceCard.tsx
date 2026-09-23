@@ -4,11 +4,12 @@ import React from "react";
 import Link from "next/link";
 import { ServiceItem } from "@/content/services";
 import { useLanguage } from "@/context/LanguageContext";
-import { ArrowRight, Cpu, Home, Sun, Zap, Network, ShieldCheck, Code2, Wrench } from "lucide-react";
+import { ArrowRight, Cpu, Home, Sun, Zap, Network, ShieldCheck, Code2, Wrench, Gauge } from "lucide-react";
 import { cn } from "@/utils/cn";
 
 const iconMap: Record<string, React.ReactNode> = {
   Cpu: <Cpu className="w-5 h-5" />,
+  Gauge: <Gauge className="w-5 h-5" />,
   Home: <Home className="w-5 h-5" />,
   Sun: <Sun className="w-5 h-5" />,
   Zap: <Zap className="w-5 h-5" />,

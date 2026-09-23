@@ -31,4 +31,16 @@ describe("WhatsApp Message and Link Builder", () => {
     expect(url.startsWith("https://wa.me/258840000000?text=")).toBe(true);
     expect(url).toContain(encodeURIComponent("Novo pedido de Atendimento — KUWALA TECH"));
   });
+
+  it("should format WhatsApp message with Instrumentação Industrial in both PT and EN", () => {
+    const instData: AtendimentoFormData = {
+      ...sampleData,
+      service: "instrumentacao-industrial",
+    };
+    const msgPt = buildWhatsAppMessage(instData, "KWL-99999", "pt");
+    expect(msgPt).toContain("*Serviço:* Instrumentação Industrial");
+
+    const msgEn = buildWhatsAppMessage(instData, "KWL-99999", "en");
+    expect(msgEn).toContain("*Service:* Industrial Instrumentation");
+  });
 });

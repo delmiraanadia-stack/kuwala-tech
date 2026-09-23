@@ -17,6 +17,7 @@ export default function ServicosPage() {
   const SERVICE_FILTERS = [
     { id: "all", label: { pt: "Todos os Serviços", en: "All Services" } },
     { id: "plc", label: { pt: "PLC", en: "PLC" }, match: "plc" },
+    { id: "instrumentation", label: { pt: "Instrumentação", en: "Instrumentation" }, match: "instrument" },
     { id: "sensors", label: { pt: "Sensores", en: "Sensors" }, match: "senso" },
     { id: "solar", label: { pt: "Solar", en: "Solar" }, match: "solar" },
     { id: "electrical", label: { pt: "Eléctricas", en: "Electrical" }, match: "eléctri" },
@@ -81,7 +82,7 @@ export default function ServicosPage() {
             </div>
           </div>
 
-          {/* GRID DOS 8 SERVIÇOS */}
+          {/* GRID DOS 9 SERVIÇOS */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
             {filteredServices.map((service) => (
               <ServiceCard key={service.slug} service={service} />

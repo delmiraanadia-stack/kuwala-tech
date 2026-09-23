@@ -21,11 +21,11 @@ O projeto foi concebido para transmitir autoridade técnica, confiabilidade de e
 
 | Rota | Descrição |
 | :--- | :--- |
-| `/` | **Página Inicial**: Hero com painel de especificações técnicas, resumo institucional, grelha dos 8 serviços, 5 soluções e 6 fases do método. |
+| `/` | **Página Inicial**: Hero com painel de especificações técnicas, resumo institucional, grelha dos 9 serviços, 5 soluções e 6 fases do método. |
 | `/empresa` | **Empresa**: Apresentação detalhada, 3 pilares, visão, missão, 8 valores e carrossel editorial dos 3 fundadores. |
 | `/sobre-nos` | **Sobre Nós**: Fundação e percurso técnico detalhado de cada fundador. |
-| `/servicos` | **Catálogo de Serviços**: Catálogo dos 8 serviços técnicos com filtros interativos. |
-| `/servicos/:slug` | **Páginas de Detalhe de Serviço**: Páginas individuais completas para cada um dos 8 serviços com escopo, aplicações, componentes e processo. |
+| `/servicos` | **Catálogo de Serviços**: Catálogo dos 9 serviços técnicos com filtros interativos. |
+| `/servicos/:slug` | **Páginas de Detalhe de Serviço**: Páginas individuais completas para cada um dos 9 serviços com escopo, aplicações, componentes e processo. |
 | `/solucoes` | **Catálogo de Soluções**: As 5 soluções integradas e método de integração global. |
 | `/solucoes/:slug` | **Páginas de Detalhe de Solução**: Páginas individuais com arquitetura, contexto, percurso em 6 passos e benefícios. |
 | `/metodo` | **Método de Trabalho**: Diagrama técnico das 6 fases (Diagnóstico, Análise, Projecto, Implementação, Testes, Continuidade). |

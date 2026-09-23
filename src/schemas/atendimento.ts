@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const SERVICE_KEYS = [
   "automacao-industrial",
+  "instrumentacao-industrial",
   "automacao-residencial",
   "energia-solar",
   "instalacoes-electricas",
@@ -62,7 +63,7 @@ export const atendimentoBaseSchema = z.object({
     .max(25, "Número de telefone demasiado longo.")
     .regex(/^[+0-9\s-()]+$/, "Formato de telefone inválido."),
   service: z.enum(SERVICE_KEYS, {
-    errorMap: () => ({ message: "Selecione um dos 8 serviços técnicos disponíveis." }),
+    errorMap: () => ({ message: "Selecione um dos 9 serviços técnicos disponíveis." }),
   }),
   neighborhood: z.enum(PEMBA_NEIGHBORHOODS, {
     errorMap: () => ({ message: "Selecione um bairro válido da cidade de Pemba." }),

@@ -52,13 +52,23 @@ describe("Atendimento Schema Validation", () => {
     expect(result.success).toBe(false);
   });
 
-  it("should reject invalid service keys not in the 8 official services", () => {
+  it("should reject invalid service keys not in the 9 official services", () => {
     const invalidServiceData = {
       ...validPersonalData,
       service: "servico-inventado" as any,
     };
     const result = atendimentoSchema.safeParse(invalidServiceData);
     expect(result.success).toBe(false);
+  });
+
+  it("should validate a service request with instrumentacao-industrial", () => {
+    const instrumentationData = {
+      ...validPersonalData,
+      service: "instrumentacao-industrial" as const,
+      projectDescription: "Calibração e comissionamento de transmissores de pressão e caudal 4-20mA HART.",
+    };
+    const result = atendimentoSchema.safeParse(instrumentationData);
+    expect(result.success).toBe(true);
   });
 
   it("should reject invalid neighborhood not in the 18 Pemba list", () => {
@@ -78,7 +88,9 @@ describe("Atendimento Schema Validation", () => {
     expect(PEMBA_NEIGHBORHOODS).toContain("Outro bairro de Pemba");
   });
 
-  it("should contain exactly 8 official services", () => {
-    expect(SERVICE_KEYS.length).toBe(8);
+  it("should contain exactly 9 official services including instrumentacao-industrial", () => {
+    expect(SERVICE_KEYS.length).toBe(9);
+    expect(SERVICE_KEYS).toContain("instrumentacao-industrial");
+    expect(SERVICE_KEYS).toContain("automacao-industrial");
   });
 });

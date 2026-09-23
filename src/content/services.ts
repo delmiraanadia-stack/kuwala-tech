@@ -112,8 +112,112 @@ export const SERVICES: ServiceItem[] = [
   },
   {
     id: "02",
-    slug: "automacao-residencial",
+    slug: "instrumentacao-industrial",
     number: "02",
+    title: {
+      pt: "Instrumentação Industrial",
+      en: "Industrial Instrumentation",
+    },
+    shortDescription: {
+      pt: "Medição, calibração, transmissão de variáveis de processo (pressão, temperatura, nível e vazão), malhas de controlo PID e válvulas industriais.",
+      en: "Process variable measurement, calibration, transmission (pressure, temperature, level, flow), PID control loops, and industrial valves.",
+    },
+    fullDescription: {
+      pt: "Engenharia, especificação, calibração e manutenção de instrumentação industrial para plantas de processamento, centrais de gás, mineração e indústria de transformação em Pemba e Cabo Delgado. Garantimos medição rigorosa de variáveis operacionais críticas, integração com sistemas PLC/SCADA e sintonia de malhas de controlo para máxima segurança e precisão do processo produtivo.",
+      en: "Engineering, specification, calibration, and commissioning of industrial instrumentation for processing plants, gas facilities, mining, and manufacturing across Pemba and Cabo Delgado. We deliver rigorous measurement of critical process variables, seamless PLC/SCADA integration, and precision PID loop tuning for operational stability and process safety.",
+    },
+    tags: {
+      pt: ["Sensores", "Transmissores", "Calibração", "4-20mA", "HART", "Pressão", "Temperatura", "Vazão", "Nível", "Válvulas"],
+      en: ["Sensors", "Transmitters", "Calibration", "4-20mA", "HART", "Pressure", "Temperature", "Flow", "Level", "Valves"],
+    },
+    scope: {
+      pt: [
+        "Especificação, montagem e comissionamento de transmissores de pressão, temperatura, nível e vazão",
+        "Calibração in-situ e em bancada de instrumentos analógicos e digitais com padrões rastreáveis",
+        "Configuração e parametrização de malhas de controlo PID e protocolos industriais (4-20mA HART, Foundation Fieldbus, Modbus)",
+        "Instalação, teste de estanqueidade e calibração de válvulas de controlo pneumáticas e posicionadores inteligentes",
+        "Montagem de linhas de impulso (tubing em aço inoxidável), manifolds, poços termométricos e tomadas de processo",
+        "Diagnóstico de avarias em malhas, levantamento de instrumentos de campo e documentação técnica (P&ID e folhas de dados)",
+      ],
+      en: [
+        "Specification, mounting, and commissioning of pressure, temperature, level, and flow transmitters",
+        "In-situ and bench calibration of analog and digital process instruments using traceable standards",
+        "Configuration and tuning of PID control loops and smart protocols (4-20mA HART, Foundation Fieldbus, Modbus)",
+        "Installation, leak testing, and calibration of pneumatic control valves and smart positioners",
+        "Fabrication and routing of impulse lines (stainless steel tubing), manifolds, thermowells, and process taps",
+        "Troubleshooting, instrument loop testing, and engineering documentation (P&ID diagrams and instrument data sheets)",
+      ],
+    },
+    applications: {
+      pt: [
+        "Usinas de processamento mineral, centrais de gás e indústria química/pesada",
+        "Sistemas de bombagem, tratamento de água e dosagem industrial",
+        "Caldeiras industriais, trocadores de calor, fornos e circuitos de vapor",
+        "Silos de cereais, parques de reservatórios de combustível e fluidos industriais",
+      ],
+      en: [
+        "Mineral processing plants, natural gas facilities, and chemical/heavy industry",
+        "Water pumping stations, municipal treatment facilities, and industrial dosing systems",
+        "Industrial boilers, heat exchangers, furnaces, and steam generation loops",
+        "Grain storage silos, fuel storage tank farms, and industrial fluid reservoirs",
+      ],
+    },
+    components: {
+      pt: [
+        "Transmissores de Pressão e Pressão Diferencial (HART / 4-20mA)",
+        "Sensores de Temperatura (PT100 RTD e Termopares com Transmissores de Cabeçote)",
+        "Medidores de Vazão/Caudal (Eletromagnéticos, Vórtice, Ultrassónicos e Turbina)",
+        "Transmissores de Nível por Radar de Onda Guiada, Ultrassom e Hidrostáticos",
+        "Válvulas de Controlo Pneumáticas com Posicionadores Digitais Inteligentes",
+        "Calibradores de Processo Multifunções e Linhas de Tubing em Inox 316",
+      ],
+      en: [
+        "Pressure & Differential Pressure Transmitters (HART / 4-20mA)",
+        "Temperature Sensors (PT100 RTD & Thermocouples with Head Transmitters)",
+        "Flow Meters (Electromagnetic, Vortex, Ultrasonic, and Turbine)",
+        "Level Transmitters (Guided Wave Radar, Ultrasonic, and Hydrostatic)",
+        "Pneumatic Control Valves with Smart Digital Valve Positioners",
+        "Multifunction Process Loop Calibrators & 316 Stainless Steel Tubing Lines",
+      ],
+    },
+    benefits: {
+      pt: [
+        "Precisão milimétrica no controlo de variáveis críticas, eliminando desperdício e refugo de matérias-primas",
+        "Proteção de ativos de alto valor e salvaguarda operacional através de alarmes e intertravamentos de segurança",
+        "Conformidade metrológica auditável com certificados de calibração emitidos in-loco",
+        "Redução drástica de tempo de paragem de produção com diagnóstico técnico ágil e equipa presencial em Pemba",
+      ],
+      en: [
+        "Millimetric precision in critical process variables, minimizing raw material waste and scrap",
+        "High-value asset protection and operational fail-safe through interlocked alarms",
+        "Auditable metrological compliance with on-site issued calibration certificates",
+        "Drastic reduction in production downtime with rapid technical diagnostics and local Pemba presence",
+      ],
+    },
+    process: [
+      {
+        step: "01",
+        title: { pt: "Inspeção e Mapeamento de Malhas", en: "Inspection & Loop Mapping" },
+        description: { pt: "Levantamento in-loco de diagramas P&ID, tomadas de processo, condições ambientais e compatibilidade química.", en: "On-site assessment of P&ID schematics, process tap connections, ambient conditions, and chemical compatibility." },
+      },
+      {
+        step: "02",
+        title: { pt: "Montagem, Tubing e Calibração", en: "Mounting, Tubing & Calibration" },
+        description: { pt: "Fixação de suportes, linhas de tubing em aço inox 316, ligações elétricas e calibração com calibrador de padrão rastreável.", en: "Support bracket fabrication, 316 stainless tubing routing, signal wiring, and traceable standard calibration." },
+      },
+      {
+        step: "03",
+        title: { pt: "Comissionamento e Folhas de Dados", en: "Commissioning & Data Sheets" },
+        description: { pt: "Testes operacionais em carga, sintonia fina de malha e entrega das folhas de especificação técnica e certificados.", en: "Live process load testing, fine loop tuning, and delivery of technical instrument sheets and calibration records." },
+      },
+    ],
+    iconName: "Gauge",
+    color: "#06B6D4",
+  },
+  {
+    id: "03",
+    slug: "automacao-residencial",
+    number: "03",
     title: {
       pt: "Automação Residencial",
       en: "Home Automation",
@@ -201,9 +305,9 @@ export const SERVICES: ServiceItem[] = [
     color: "#F59E0B",
   },
   {
-    id: "03",
+    id: "04",
     slug: "energia-solar",
-    number: "03",
+    number: "04",
     title: {
       pt: "Energia Solar",
       en: "Solar Energy",
@@ -291,9 +395,9 @@ export const SERVICES: ServiceItem[] = [
     color: "#FFB703",
   },
   {
-    id: "04",
+    id: "05",
     slug: "instalacoes-electricas",
-    number: "04",
+    number: "05",
     title: {
       pt: "Instalações Eléctricas",
       en: "Electrical Installations",
@@ -381,9 +485,9 @@ export const SERVICES: ServiceItem[] = [
     color: "#00D2FF",
   },
   {
-    id: "05",
+    id: "06",
     slug: "redes-informaticas",
-    number: "05",
+    number: "06",
     title: {
       pt: "Redes Informáticas",
       en: "Computer Networks",
@@ -471,9 +575,9 @@ export const SERVICES: ServiceItem[] = [
     color: "#00D2FF",
   },
   {
-    id: "06",
+    id: "07",
     slug: "seguranca-electronica",
-    number: "06",
+    number: "07",
     title: {
       pt: "Segurança Electrónica",
       en: "Electronic Security",
@@ -561,9 +665,9 @@ export const SERVICES: ServiceItem[] = [
     color: "#F59E0B",
   },
   {
-    id: "07",
+    id: "08",
     slug: "desenvolvimento-tecnologico",
-    number: "07",
+    number: "08",
     title: {
       pt: "Desenvolvimento Tecnológico",
       en: "Technology Development",
@@ -651,9 +755,9 @@ export const SERVICES: ServiceItem[] = [
     color: "#00D2FF",
   },
   {
-    id: "08",
+    id: "09",
     slug: "manutencao-tecnica",
-    number: "08",
+    number: "09",
     title: {
       pt: "Manutenção Técnica",
       en: "Technical Maintenance",
