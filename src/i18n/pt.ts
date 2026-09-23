@@ -300,7 +300,35 @@ export const pt = {
     },
     errors: {
       general: "Ocorreu um erro no processamento do pedido. Por favor verifique os campos e tente novamente.",
-      rateLimit: "Muitos pedidos enviados recentemente. Aguarde alguns instantes antes de submeter novamente.",
+      rateLimit: "Demasiados pedidos enviados. Por favor aguarde 5 minutos antes de tentar novamente.",
+      serverError: "Ocorreu um erro interno ao registar o pedido no servidor. Tente novamente mais tarde.",
+    },
+    validation: {
+      required: "Este campo é obrigatório.",
+      invalid: "Valor introduzido inválido.",
+      requestTypeInvalid: "Selecione o tipo de pedido: Pessoal ou Empresa.",
+      fullNameRequired: "O nome completo é obrigatório.",
+      fullNameMin: "O nome completo deve conter pelo menos 2 caracteres.",
+      fullNameMax: "O nome não pode exceder 120 caracteres.",
+      companyNameRequired: "O nome da empresa é obrigatório para pedidos do tipo Empresa.",
+      companyNameMax: "O nome da empresa não pode exceder 120 caracteres.",
+      emailRequired: "Este campo é obrigatório.",
+      emailInvalid: "Introduza um endereço de email válido (exemplo: seu.nome@empresa.co.mz).",
+      phoneRequired: "Introduza um número de telefone válido.",
+      phoneMin: "Introduza um contacto telefónico válido (mínimo 8 dígitos).",
+      phoneMax: "Número de telefone demasiado longo.",
+      phoneInvalid: "Formato de telefone inválido.",
+      serviceRequired: "Selecione um dos 9 serviços técnicos disponíveis.",
+      neighborhoodRequired: "Selecione um bairro válido da cidade de Pemba.",
+      referencePointRequired: "Indique a zona ou ponto de referência (ex: Próximo à Escola Secundária / Rotunda).",
+      referencePointMin: "O ponto de referência deve conter pelo menos 3 caracteres.",
+      referencePointMax: "Ponto de referência demasiado longo.",
+      locationDescriptionRequired: "Descreva com detalhe a localização física das instalações.",
+      locationDescriptionMin: "A descrição da localização deve conter pelo menos 5 caracteres.",
+      locationDescriptionMax: "Descrição de localização demasiado longa.",
+      projectDescriptionRequired: "Descreva o projecto ou problema técnico.",
+      projectDescriptionMin: "Descreva o seu projecto ou problema técnico com pelo menos 15 caracteres.",
+      projectDescriptionMax: "A descrição do projecto não pode exceder 3000 caracteres.",
     },
   },
   notFound: {
@@ -311,3 +339,5 @@ export const pt = {
     viewServices: "Explorar Serviços Técnicos",
   },
 };
+
+export type Translations = typeof pt;

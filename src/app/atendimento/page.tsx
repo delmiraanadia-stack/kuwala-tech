@@ -12,6 +12,7 @@ import {
 import { SERVICES } from "@/content/services";
 import { BRAND } from "@/content/brand";
 import { generateWhatsAppLink, formatServiceName } from "@/utils/whatsapp";
+import { resolveValidationError } from "@/utils/validation";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeading } from "@/components/SectionHeading";
 import { FormField } from "@/components/FormField";
@@ -53,8 +54,24 @@ export default function AtendimentoPage() {
   const [formState, setFormState] = useState<FormState>("idle");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [serverErrorMessage, setServerErrorMessage] = useState<string>("");
+  const [serverErrorCode, setServerErrorCode] = useState<string>("");
   const [createdRequestId, setCreatedRequestId] = useState<string>("");
   const [whatsappUrl, setWhatsappUrl] = useState<string>("");
+
+  // Helper para resolver a mensagem de erro do campo no idioma ativo (PT / EN)
+  const getFieldError = (fieldName: string): string | undefined => {
+    const errorKeyOrMessage = fieldErrors[fieldName];
+    if (!errorKeyOrMessage) return undefined;
+    return resolveValidationError(errorKeyOrMessage, t);
+  };
+
+  // Helper para resolver o erro do servidor no idioma ativo
+  const getServerError = (): string => {
+    if (serverErrorCode) {
+      return resolveValidationError(serverErrorCode, t);
+    }
+    return serverErrorMessage || t.atendimento.errors.general;
+  };
 
   // Handle Input Changes
   const handleInputChange = (
@@ -102,6 +119,7 @@ export default function AtendimentoPage() {
     setFormState("submitting");
     setFieldErrors({});
     setServerErrorMessage("");
+    setServerErrorCode("");
 
     // 1. Client-side Zod Validation
     const validation = atendimentoSchema.safeParse(formData);
@@ -109,7 +127,9 @@ export default function AtendimentoPage() {
       const errors: Record<string, string> = {};
       validation.error.errors.forEach((err) => {
         const path = err.path.join(".");
-        errors[path] = err.message;
+        if (!errors[path]) {
+          errors[path] = err.message;
+        }
       });
       setFieldErrors(errors);
       setFormState("validation-error");
@@ -133,7 +153,15 @@ export default function AtendimentoPage() {
           setFieldErrors(json.error.fields);
           setFormState("validation-error");
         } else {
-          setServerErrorMessage(json.error?.message || t.atendimento.errors.general);
+          const errCode = json.error?.code;
+          if (errCode === "RATE_LIMIT_EXCEEDED") {
+            setServerErrorCode("rateLimit");
+          } else if (errCode === "SERVER_ERROR") {
+            setServerErrorCode("serverError");
+          } else {
+            setServerErrorCode(json.error?.message ? "" : "general");
+          }
+          setServerErrorMessage(json.error?.message || "");
           setFormState("server-error");
         }
         return;
@@ -153,6 +181,7 @@ export default function AtendimentoPage() {
       setFormState("success");
     } catch (err) {
       console.error("Submission failed:", err);
+      setServerErrorCode("general");
       setServerErrorMessage(t.atendimento.errors.general);
       setFormState("server-error");
     }
@@ -174,6 +203,7 @@ export default function AtendimentoPage() {
     setFormState("idle");
     setFieldErrors({});
     setServerErrorMessage("");
+    setServerErrorCode("");
     setCreatedRequestId("");
     setWhatsappUrl("");
   };
@@ -283,7 +313,7 @@ export default function AtendimentoPage() {
                   className="p-4 rounded-lg bg-red-950/60 border border-red-500/60 text-red-300 text-xs font-mono flex items-center gap-3"
                 >
                   <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
-                  <span>{serverErrorMessage}</span>
+                  <span>{getServerError()}</span>
                 </div>
               )}
 
@@ -335,7 +365,7 @@ export default function AtendimentoPage() {
                   placeholder={t.atendimento.form.fullNamePlaceholder}
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  error={fieldErrors["fullName"]}
+                  error={getFieldError("fullName")}
                   required
                 />
 
@@ -346,7 +376,7 @@ export default function AtendimentoPage() {
                     placeholder={t.atendimento.form.companyNamePlaceholder}
                     value={formData.companyName || ""}
                     onChange={handleInputChange}
-                    error={fieldErrors["companyName"]}
+                    error={getFieldError("companyName")}
                     hint={t.atendimento.form.companyRequiredHint}
                     required
                   />
@@ -357,7 +387,7 @@ export default function AtendimentoPage() {
                     placeholder={t.atendimento.form.phonePlaceholder}
                     value={formData.phone}
                     onChange={handleInputChange}
-                    error={fieldErrors["phone"]}
+                    error={getFieldError("phone")}
                     required
                   />
                 )}
@@ -371,7 +401,7 @@ export default function AtendimentoPage() {
                   placeholder={t.atendimento.form.emailPlaceholder}
                   value={formData.email}
                   onChange={handleInputChange}
-                  error={fieldErrors["email"]}
+                  error={getFieldError("email")}
                   required
                 />
 
@@ -382,7 +412,7 @@ export default function AtendimentoPage() {
                     placeholder={t.atendimento.form.phonePlaceholder}
                     value={formData.phone}
                     onChange={handleInputChange}
-                    error={fieldErrors["phone"]}
+                    error={getFieldError("phone")}
                     required
                   />
                 )}
@@ -395,7 +425,7 @@ export default function AtendimentoPage() {
                   label={t.atendimento.form.serviceLabel}
                   value={formData.service}
                   onChange={handleInputChange}
-                  error={fieldErrors["service"]}
+                  error={getFieldError("service")}
                   options={SERVICES.map((s) => ({
                     value: s.slug,
                     label: `${s.number}. ${s.title[language]}`,
@@ -419,7 +449,7 @@ export default function AtendimentoPage() {
                     label={t.atendimento.form.neighborhoodLabel}
                     value={formData.neighborhood}
                     onChange={handleInputChange}
-                    error={fieldErrors["neighborhood"]}
+                    error={getFieldError("neighborhood")}
                     options={PEMBA_NEIGHBORHOODS.map((b) => ({
                       value: b,
                       label: b,
@@ -433,7 +463,7 @@ export default function AtendimentoPage() {
                     placeholder={t.atendimento.form.referencePointPlaceholder}
                     value={formData.referencePoint}
                     onChange={handleInputChange}
-                    error={fieldErrors["referencePoint"]}
+                    error={getFieldError("referencePoint")}
                     required
                   />
                 </div>
@@ -444,7 +474,7 @@ export default function AtendimentoPage() {
                   placeholder={t.atendimento.form.locationDescriptionPlaceholder}
                   value={formData.locationDescription}
                   onChange={handleInputChange}
-                  error={fieldErrors["locationDescription"]}
+                  error={getFieldError("locationDescription")}
                   required
                 />
               </div>
@@ -457,7 +487,7 @@ export default function AtendimentoPage() {
                   placeholder={t.atendimento.form.projectDescriptionPlaceholder}
                   value={formData.projectDescription}
                   onChange={handleInputChange}
-                  error={fieldErrors["projectDescription"]}
+                  error={getFieldError("projectDescription")}
                   rows={5}
                   required
                 />

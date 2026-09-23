@@ -88,6 +88,63 @@ describe("Atendimento Schema Validation", () => {
     expect(PEMBA_NEIGHBORHOODS).toContain("Outro bairro de Pemba");
   });
 
+  it("should accept legitimate short names with 2 or 3 letters (Ali, Amy, Abu, Ed, Li)", () => {
+    const shortNames = ["Ali", "Amy", "Abu", "Ed", "Li", "Bo"];
+    shortNames.forEach((name) => {
+      const res = atendimentoSchema.safeParse({
+        ...validPersonalData,
+        fullName: name,
+      });
+      expect(res.success).toBe(true);
+    });
+  });
+
+  it("should reject 1-character names with fullNameMin code", () => {
+    const res = atendimentoSchema.safeParse({
+      ...validPersonalData,
+      fullName: "A",
+    });
+    expect(res.success).toBe(false);
+    if (!res.success) {
+      const err = res.error.errors.find((e) => e.path.includes("fullName"));
+      expect(err?.message).toBe("fullNameMin");
+    }
+  });
+
+  it("should reject empty fullName with fullNameRequired code", () => {
+    const res = atendimentoSchema.safeParse({
+      ...validPersonalData,
+      fullName: "   ",
+    });
+    expect(res.success).toBe(false);
+    if (!res.success) {
+      const err = res.error.errors.find((e) => e.path.includes("fullName"));
+      expect(err?.message).toBe("fullNameRequired");
+    }
+  });
+
+  it("should emit canonical error codes for empty vs invalid email", () => {
+    const emptyEmailRes = atendimentoSchema.safeParse({
+      ...validPersonalData,
+      email: "",
+    });
+    expect(emptyEmailRes.success).toBe(false);
+    if (!emptyEmailRes.success) {
+      const err = emptyEmailRes.error.errors.find((e) => e.path.includes("email"));
+      expect(err?.message).toBe("emailRequired");
+    }
+
+    const invalidEmailRes = atendimentoSchema.safeParse({
+      ...validPersonalData,
+      email: "invalido",
+    });
+    expect(invalidEmailRes.success).toBe(false);
+    if (!invalidEmailRes.success) {
+      const err = invalidEmailRes.error.errors.find((e) => e.path.includes("email"));
+      expect(err?.message).toBe("emailInvalid");
+    }
+  });
+
   it("should contain exactly 9 official services including instrumentacao-industrial", () => {
     expect(SERVICE_KEYS.length).toBe(9);
     expect(SERVICE_KEYS).toContain("instrumentacao-industrial");

@@ -37,52 +37,106 @@ export type ServiceType = (typeof SERVICE_KEYS)[number];
 export type NeighborhoodType = (typeof PEMBA_NEIGHBORHOODS)[number];
 export type RequestKind = "personal" | "company";
 
+export const VALIDATION_CODES = {
+  required: "required",
+  invalid: "invalid",
+  requestTypeInvalid: "requestTypeInvalid",
+  fullNameRequired: "fullNameRequired",
+  fullNameMin: "fullNameMin",
+  fullNameMax: "fullNameMax",
+  companyNameRequired: "companyNameRequired",
+  companyNameMax: "companyNameMax",
+  emailRequired: "emailRequired",
+  emailInvalid: "emailInvalid",
+  phoneRequired: "phoneRequired",
+  phoneMin: "phoneMin",
+  phoneMax: "phoneMax",
+  phoneInvalid: "phoneInvalid",
+  serviceRequired: "serviceRequired",
+  neighborhoodRequired: "neighborhoodRequired",
+  referencePointRequired: "referencePointRequired",
+  referencePointMin: "referencePointMin",
+  referencePointMax: "referencePointMax",
+  locationDescriptionRequired: "locationDescriptionRequired",
+  locationDescriptionMin: "locationDescriptionMin",
+  locationDescriptionMax: "locationDescriptionMax",
+  projectDescriptionRequired: "projectDescriptionRequired",
+  projectDescriptionMin: "projectDescriptionMin",
+  projectDescriptionMax: "projectDescriptionMax",
+} as const;
+
+export type ValidationCode = keyof typeof VALIDATION_CODES;
+
 export const atendimentoBaseSchema = z.object({
   requestType: z.enum(["personal", "company"], {
-    errorMap: () => ({ message: "Selecione o tipo de pedido: Pessoal ou Empresa." }),
+    errorMap: () => ({ message: "requestTypeInvalid" }),
   }),
   fullName: z
     .string()
     .trim()
-    .min(3, "O nome completo deve conter pelo menos 3 caracteres.")
-    .max(120, "O nome não pode exceder 120 caracteres."),
+    .min(1, "fullNameRequired")
+    .max(120, "fullNameMax")
+    .refine((val) => val.length === 0 || val.length >= 2, {
+      message: "fullNameMin",
+    }),
   companyName: z
     .string()
     .trim()
-    .max(120, "O nome da empresa não pode exceder 120 caracteres.")
+    .max(120, "companyNameMax")
     .optional()
     .or(z.literal("")),
   email: z
     .string()
     .trim()
-    .email("Introduza um endereço de email válido (exemplo: seu.nome@empresa.co.mz)."),
+    .min(1, "emailRequired")
+    .refine((val) => val.length === 0 || z.string().email().safeParse(val).success, {
+      message: "emailInvalid",
+    }),
   phone: z
     .string()
     .trim()
-    .min(8, "Introduza um contacto telefónico válido (mínimo 8 dígitos).")
-    .max(25, "Número de telefone demasiado longo.")
-    .regex(/^[+0-9\s-()]+$/, "Formato de telefone inválido."),
+    .min(1, "phoneRequired")
+    .max(25, "phoneMax")
+    .refine((val) => val.length === 0 || /^[+0-9\s-()]+$/.test(val), {
+      message: "phoneInvalid",
+    })
+    .refine(
+      (val) =>
+        val.length === 0 || !/^[+0-9\s-()]+$/.test(val) || val.length >= 8,
+      {
+        message: "phoneMin",
+      }
+    ),
   service: z.enum(SERVICE_KEYS, {
-    errorMap: () => ({ message: "Selecione um dos 9 serviços técnicos disponíveis." }),
+    errorMap: () => ({ message: "serviceRequired" }),
   }),
   neighborhood: z.enum(PEMBA_NEIGHBORHOODS, {
-    errorMap: () => ({ message: "Selecione um bairro válido da cidade de Pemba." }),
+    errorMap: () => ({ message: "neighborhoodRequired" }),
   }),
   referencePoint: z
     .string()
     .trim()
-    .min(3, "Indique a zona ou ponto de referência (ex: Próximo à Escola Secundária / Rotunda).")
-    .max(200, "Ponto de referência demasiado longo."),
+    .min(1, "referencePointRequired")
+    .max(200, "referencePointMax")
+    .refine((val) => val.length === 0 || val.length >= 3, {
+      message: "referencePointMin",
+    }),
   locationDescription: z
     .string()
     .trim()
-    .min(5, "Descreva com detalhe a localização física das instalações.")
-    .max(500, "Descrição de localização demasiado longa."),
+    .min(1, "locationDescriptionRequired")
+    .max(500, "locationDescriptionMax")
+    .refine((val) => val.length === 0 || val.length >= 5, {
+      message: "locationDescriptionMin",
+    }),
   projectDescription: z
     .string()
     .trim()
-    .min(15, "Descreva o seu projecto ou problema técnico com pelo menos 15 caracteres.")
-    .max(3000, "A descrição do projecto não pode exceder 3000 caracteres."),
+    .min(1, "projectDescriptionRequired")
+    .max(3000, "projectDescriptionMax")
+    .refine((val) => val.length === 0 || val.length >= 15, {
+      message: "projectDescriptionMin",
+    }),
 });
 
 // Refinement for dynamic company field validation
@@ -91,7 +145,7 @@ export const atendimentoSchema = atendimentoBaseSchema.superRefine((data, ctx) =
     if (!data.companyName || data.companyName.trim().length < 2) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "O nome da empresa é obrigatório para pedidos do tipo Empresa.",
+        message: "companyNameRequired",
         path: ["companyName"],
       });
     }
